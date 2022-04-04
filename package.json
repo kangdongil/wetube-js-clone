@@ -2,15 +2,20 @@
   "name": "wetube",
   "description": "- HTML/CSS     - Box Model \t- Flex   - Git     - Commit \t- Push   - JavaScript     - Event \t- Variable   - Chronium Browser   - VSCode(>GoormIDE)   - NodeJS",
   "version": "1.0.0",
-  "main": "main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kangdongil/wetube_goorm_220404.git"
+  },
+  "scripts": {
+    "dev": "node main.js"
   },
   "author": "noru8150",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kangdongil/wetube_goorm_220404/issues"
   },
-  "homepage": "https://github.com/kangdongil/wetube_goorm_220404#readme"
+  "homepage": "https://github.com/kangdongil/wetube_goorm_220404#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }

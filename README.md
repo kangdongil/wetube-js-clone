@@ -39,4 +39,29 @@
   - NodeJS
     - `npm init`
   * `.json`: 데이터를 객체 포맷으로 저장한 파일.
-  
+
+# 2.1 nodeJS 실행하기
+  - Node 명령어 이용하기
+    - `node [JS파일경로]`
+  - `package.json` `script` 이용하기
+    - `script` 안에 `"dev": "node index.js"` 추가하기
+	- console: `npm run [SCRIPT]`
+ 
+# 2.1.1 NodeJS 프로젝트 구조 살펴보기
+  - `package.json`
+    - NodeJS 프로젝트에 대한 설명을 내용으로 함.
+	- `npm i`로 프로젝트에 필요한 패키지를 자동 설치한다.
+	- `scripts`
+	  - 간단한 항목명(entry)으로 명령어들을 일괄 실행함
+	  - `"[항목명]": "[명령어들]"`
+	  - `npm run [항목명]`으로 실행한다
+	- `dependencies`
+	  - 프로젝트가 작동하기 위해 필요한 패키지들
+	- `devDependencies`
+	  - 
+  - `node_modules/`
+    - npm으로 설치한 프로젝트의 패키지들을 저장하는 폴더.
+	- 패키지간 위계는 package.json에서 기술하며, 파일 경로상 위계는 동등하다
+  - `package-lock.json`
+    - 패키지 버전관리하는 파일
+  - 
