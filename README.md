@@ -1,0 +1,13 @@
+# 1.1 Project Requirements
+  - HTML/CSS
+    - Box Model
+	- Flex
+  - Git
+    - Commit
+	- Push
+  - JavaScript
+    - Event
+	- Variable
+  - Chronium Browser
+  - VSCode(>GoormIDE)
+  - NodeJS
