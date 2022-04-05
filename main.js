@@ -1,5 +1,1 @@
-function main(){
-	console.log("Hello goorm!");
-}
-
-main();
+console.log("Hi nice to meet you!");
