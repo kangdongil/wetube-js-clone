@@ -8,6 +8,9 @@
   - JavaScript
     - Event
 	- Variable
+	  - const
+	- Function
+	  - Arrow Function
   - Chronium Browser
   - VSCode(>GoormIDE)
   - NodeJS
@@ -30,6 +33,9 @@
 # 2.0 프로젝트 시작하기
   - 프로젝트 폴더 만들기
     - `mkdir ~`
+	- src 폴더로 파일관리하기
+	  - `mkdir src/`
+	- 
   - Git
     - `git init`
 	- GitHub에서 새로운 Respository 만들기
@@ -79,4 +85,30 @@
   - Import
     - 구JS 코드: `const [변수명] = require("[패키지명]");`
 	- `import [변수명] = "[패키지명]";`
-	
+
+# 3.0 Express로 서버 구동하기
+  1. Express를 import하기
+     - `import express from "express";`
+  2. Express Application을 변수에 지정하기
+     - `const app = express();`
+  3. Express가 request에 listen하게 하기(서버 시작)
+     - `app.listen(PORT, CALLBACK)`
+  
+  * Port: 컴퓨터와 서버 접속을 관리하는 문.
+  * GoormIDE에서 포트 설정법
+    - 로컬PC: `http://localhost:${PORT}/`
+	- GoormIDE: [프로젝트] - [실행 URL과 포트]
+
+# 3.1 GET Request로 서버에게 웹페이지 요청하기
+  - HTTP 방식: 서버와 브라우저간 데이터를 주고받는 방식
+  - GET Request: 웹페이지 관련한 데이터를 요청하는 것
+    - `app.get("[URL]", [CALLBACK])`
+    - [CALLBACK] 함수는 `req`(request), `res`(response) object를 argument로 가짐.
+	- `res`를 return하면 request가 완료된다
+    - `res`: request에 대해 서버가 응답하는 것
+	  - `res.end`
+	  - `res.send`: 텍스트, JSON, 짧은 HTML 보내기
+	  - `res.render`
+	  - `res.redirect`
+	  
+  * `/`: 서버의 Root 페이지
