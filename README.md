@@ -129,4 +129,8 @@
     - `app.use`는 공통적으로 작동하는 Middleware에 적합함.
 	- `app.use([MIDDLEWARE명]);`
 	- 코드 순서상, `app.get` 앞에 위치해야 함
-	
+
+# 3.6 유용한 Middleware 사용하기
+  - Morgan
+    - `npm i morgan`
+	- morgan("dev")
