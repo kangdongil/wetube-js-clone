@@ -35,7 +35,6 @@
     - `mkdir ~`
 	- src 폴더로 파일관리하기
 	  - `mkdir src/`
-	- 
   - Git
     - `git init`
 	- GitHub에서 새로운 Respository 만들기
@@ -106,6 +105,8 @@
     - [CONTROLLER] 함수는 `req`(request), `res`(response) object를 argument로 가짐.
 	- `res`를 return하면 request가 완료된다
 	- `req`: request가 가진 정보를 담은 object
+	  - `req.url` 또는 `req.path`
+	  - `req.method`
     - `res`: request에 대해 서버가 응답하는 방식
 	  - `res.end`
 	  - `res.send`: 텍스트, JSON, 짧은 HTML 보내기
@@ -122,8 +123,10 @@
     - `app.get([ROUTE], [CALLBACKs])`
 	  - [CALLBACKs]: `[MIDDLEWARE]..., [CONT]`
 	- Middleware는 `next()`로 다음 controller로 넘어갈 수 있다
+	- 마지막 Controller는 response를 한다
 	- `app.get`은 특정 URL을 접속할 때만 작동하는 Middleware에 적합함.
   - `app.use`로 Middleware 만들기
     - `app.use`는 공통적으로 작동하는 Middleware에 적합함.
 	- `app.use([MIDDLEWARE명]);`
+	- 코드 순서상, `app.get` 앞에 위치해야 함
 	
