@@ -86,6 +86,16 @@
   - Import
     - 구JS 코드: `const [변수명] = require("[패키지명]");`
 	- `import [변수명] = "[패키지명]";`
+  - Export
+    - 무언가 import하기 전에 export를 해야 한다
+    - Export Default
+	  - js파일의 대표 variable을 export할 때,
+	  - js파일 마지막문에 `export default [variable명];`라 쓴다
+	  - import하려면 `import [임의명] from "[파일 경로]";`
+	- Export
+	  - js파일의 여러 variable을 export할 때 적합함
+	  - variable마다 맨앞에 export를 붙인다
+	  - import하려면 `import { ... } from "[파일 경로]"`
 
 # 3.0 Express로 서버 구동하기
   1. Express를 import하기
@@ -139,6 +149,7 @@
 	
 # 4.0 Router란,
   - Router: URL과 Controller 관리를 도와줌.
+    - Router는 URL의 공통부분을 묶어 중복을 줄일 수 있다
   - Router 계획하기
     - 프로젝트에 어떤 종류의 데이터가 주가 될지(Domain) 생각하기
 	  - Wetube = Video + User
@@ -159,3 +170,11 @@
 	  - `export default [Router명];`
 	- server.js
 	  - `import [Router명] from "./routers/[Router명].js";`
+  - Controller 파일별로 분리하기
+    - Router와 Controller는 분리하는 편이 좋다
+	- `mkdir src/controllers`
+	- `touch src/controllers/[controller명].js`
+	  - Controller마다 맨앞에 export 넣기
+	  - `export const [CONT명] = ...`
+	- router.js
+	  - `import { [CONT명], ... } from "../controllers/[CONT명].js"`
