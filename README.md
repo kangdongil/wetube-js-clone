@@ -81,6 +81,8 @@
     - 패키지 버전관리하는 파일
 
 # 2.3 NodeJS 패키지 Import & Export하기
+  - NodeJS 파일은 환경독립적이다
+    - 각 파일마다 import와 export를 개별적으로 해야한다
   - Import
     - 구JS 코드: `const [변수명] = require("[패키지명]");`
 	- `import [변수명] = "[패키지명]";`
@@ -149,4 +151,11 @@
 	  - Video Router
   - Router 만들기
     - `const [Router명] = express.Router();`
-	
+	- `[Router명].get([Route], [CONT])`
+  - Router 파일별로 분리하기
+    - `mkdir src/routers`
+	- `touch src/routers/[router명].js`
+	  - `import express from "express";`
+	  - `export default [Router명];`
+	- server.js
+	  - `import [Router명] from "./routers/[Router명].js";`
