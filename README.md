@@ -150,7 +150,7 @@
 # 4.0 Router란,
   - Router: URL과 Controller 관리를 도와줌.
     - Router는 URL의 공통부분을 묶어 중복을 줄일 수 있다
-  - Router 계획하기
+  - Router 계획하는 법
     - 프로젝트에 어떤 종류의 데이터가 주가 될지(Domain) 생각하기
 	  - Wetube = Video + User
 	- 데이터를 다룰 때 어떤 기능이 필요한지 생각하기(CRUD)
@@ -160,6 +160,24 @@
 	  - Global Router: `/`(루트 URL)을 기준으로 하는 URL의 집합
 	  - User Router
 	  - Video Router
+  - Router 계획하기
+    - Global Router
+      - / -> Home
+      - /join -> Join
+      - /login -> Login
+      - /search -> Search
+    - User Router
+      - /users/:id -> See User
+      - /users/logout -> Log Out
+      - /users/edit -> Edit MY Profile
+      - /users/delete -> Delete MY Profile
+    - Video Router
+      - /videos/:id -> See Video
+      - /videos/:id/edit -> Edit Video
+      - /videos/:id/delete -> Delete Video
+      - /videos/upload -> Upload Video
+	
+# 4.5 Router 구축하기
   - Router 만들기
     - `const [Router명] = express.Router();`
 	- `[Router명].get([Route], [CONT])`
@@ -178,3 +196,14 @@
 	  - `export const [CONT명] = ...`
 	- router.js
 	  - `import { [CONT명], ... } from "../controllers/[CONT명].js"`
+
+# 4.7 URL 변수 사용하기(URL Parameter)
+  - URL Parameter: URL에 변수를 사용하게 함
+  - URL에 변수를 사용하려면 `:[변수명]` 형식을 지키기
+  - `req.params`로 변수들이 담긴 object를 return함
+  - 변수가 포함된 Route는 아랫줄에 두기(위에서 아래로 코드가 실행되므로)
+  - 변수의 형태를 제한하려면 Regular Expression을 사용한다
+    - Express Reg
+	  - ? / + / *
+    - JavaScript Reg
+	  - `\\d` / 
