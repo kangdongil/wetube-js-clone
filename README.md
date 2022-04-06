@@ -102,13 +102,28 @@
 # 3.1 GET Request로 서버에게 웹페이지 요청하기
   - HTTP 방식: 서버와 브라우저간 데이터를 주고받는 방식
   - GET Request: 웹페이지 관련한 데이터를 요청하는 것
-    - `app.get("[URL]", [CALLBACK])`
-    - [CALLBACK] 함수는 `req`(request), `res`(response) object를 argument로 가짐.
+    - `app.get("[URL]", [CONT])`
+    - [CONTROLLER] 함수는 `req`(request), `res`(response) object를 argument로 가짐.
 	- `res`를 return하면 request가 완료된다
-    - `res`: request에 대해 서버가 응답하는 것
+	- `req`: request가 가진 정보를 담은 object
+    - `res`: request에 대해 서버가 응답하는 방식
 	  - `res.end`
 	  - `res.send`: 텍스트, JSON, 짧은 HTML 보내기
 	  - `res.render`
 	  - `res.redirect`
 	  
   * `/`: 서버의 Root 페이지
+  
+# 3.5 Middleware 알아보기
+  - Middleware: Request와 Response 사이에 들어가는 Controller
+  - Controller: Express 서버를 이루는 Function
+  - Middleware는 req, res 외에 next라는 argument를 가진다
+  - `app.get`으로 Middlware 만들기
+    - `app.get([ROUTE], [CALLBACKs])`
+	  - [CALLBACKs]: `[MIDDLEWARE]..., [CONT]`
+	- Middleware는 `next()`로 다음 controller로 넘어갈 수 있다
+	- `app.get`은 특정 URL을 접속할 때만 작동하는 Middleware에 적합함.
+  - `app.use`로 Middleware 만들기
+    - `app.use`는 공통적으로 작동하는 Middleware에 적합함.
+	- `app.use([MIDDLEWARE명]);`
+	
