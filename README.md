@@ -134,3 +134,19 @@
   - Morgan
     - `npm i morgan`
 	- morgan("dev")
+	
+# 4.0 Router란,
+  - Router: URL과 Controller 관리를 도와줌.
+  - Router 계획하기
+    - 프로젝트에 어떤 종류의 데이터가 주가 될지(Domain) 생각하기
+	  - Wetube = Video + User
+	- 데이터를 다룰 때 어떤 기능이 필요한지 생각하기(CRUD)
+	  - User: join / login / logout / edit-profile / delete-profile
+	  - Video: upload / search / watch / edit / delete
+    - 무슨 그룹으로 묶을지 생각하고 각각을 Router로 정한다
+	  - Global Router: `/`(루트 URL)을 기준으로 하는 URL의 집합
+	  - User Router
+	  - Video Router
+  - Router 만들기
+    - `const [Router명] = express.Router();`
+	
