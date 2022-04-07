@@ -244,8 +244,10 @@
 	- `else`
 	- `if else [조건]`
   - Iteration
+    - Array나 Object 내 개체에 대해 html객체를 반복하여 생성함
+	- `each [단수명] in [복수명]`
+	- `else`를 하면 목록이 비었을 경우도 대처할 수 있다
   - Mixins
-
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
