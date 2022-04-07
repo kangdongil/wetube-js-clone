@@ -227,3 +227,11 @@
     - partial: 고정된 내용이 반복이 될 때
     - `mkdir src/views/partials`
 	- `include partials/[PUG파일명].pug`
+  - Base
+    - pug파일간 상속(Inheritence)할 수 있다는 점을 이용함.
+	- `touch src/views/base.pug`
+	- base파일을 상속받으려면, `extends base`하기
+	- base파일에 block를 설정해 파일만의 내용을 넣을 수 있다
+	  - `block content`(base파일&개별파일)
+	- 
+	  - 
