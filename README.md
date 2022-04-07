@@ -223,6 +223,7 @@
     - res.render("[PUG명]", {[변수명]: [변수값]});
 	- Template에서 변수 사용하기
 	  - `#{[변수명]}`
+	  - 텍스트 안 변수는 Backtick과 `${}`을 사용하기
 	  
 # 5.2 Pug 문법구조 살펴보기
   - Pug 파일 문법구조
@@ -261,6 +262,17 @@
 	  - `include mixins/[mixin명]`
 	  - `+[mixin명](받아올 데이터)`
 	- mixin은 iteration과 함께 사용한다
+
+# 6.0 백엔드에 데이터 보내는 원리 이해하기
+  - CRUD: Create / Read / Update / Delete
+  - Watch Video 구현하기[R]
+    - Controller
+	  - 컨트롤러 home에서 video 보내기
+	  - 컨트롤러 watch에서 id 받아오기
+	  - 컨트롤러 watch에서 video.title 받아 pageTitle로 사용하기
+	- Template
+	  - `video.id`로 링크 구현하기
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
