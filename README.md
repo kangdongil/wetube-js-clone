@@ -265,6 +265,7 @@
 
 # 6.0 백엔드에 데이터 보내는 원리 이해하기
   - CRUD: Create / Read / Update / Delete
+  - POST Method: Form에 입력한 내용을 DB로 보내는 목적
   - Watch Video 구현하기[R]
     - Controller
 	  - 컨트롤러 home에서 video 보내기
@@ -272,6 +273,43 @@
 	  - 컨트롤러 watch에서 video.title 받아 pageTitle로 사용하기
 	- Template
 	  - `video.id`로 링크 구현하기
+  - Edit Video 구현하기[U]
+    - Router
+	  - 같은 URL로 GET과 POST하기(edit)
+	  - `app.route("[URL]").get([CONT]).post([CONT])`
+	  - import한 function명 수정하기(`edit` >> `getEdit`)
+    - Controller:getEdit
+	  - 기존 edit은 getEdit으로 수정하기
+	- Controller:postEdit
+	  - 웹페이지 id를 받아와 redirect하기
+	  - req.body에서 title을 받아와서 array값 수정하기
+	- Template
+	  - 템플릿 watch에 edit 페이지 링크를 추가하기
+	  - 템플릿 edit에 title을 수정하는 form 만들기
+	  - form 안 input은 name 속성 가지기
+  - Upload Video 구현하기[C]
+    - Router
+	  - 같은 URL로 GET과 POST하기(upload)
+	  - `getUpload`와 `postUpload` import하기
+	- Controller:getUpload
+	  - 템플릿 upload를 render하기
+	- Controller:postUpload
+	  - 새로운 video Object를 만들기
+	  - videos에 추가하기
+	- Template
+	  - 템플릿 base에 upload video 링크를 추가하기
+	  - 템플릿 upload에 form 만들기
+  
+	* 절대경로 vs. 상대경로
+	  - URL 맨앞에 "/" 여부에 따라 결과가 달라짐
+	  - "/"가 맨앞에 있으면 현재 접속하고 있는 페이지와 상관없이 루트 페이지가 기준이다
+	  - 만약 없다면 마지막 / 앞쪽을 유지한 뒤에 값을 URL로 한다
+	* `req.body`로 form 정보 다루기
+	  - `app.use(express.urlencoded({ extended: true }));`
+	  - form 안 input의 값을 가져오려면 name 속성을 가져야 한다
+
+# 6.0 MongoDB 설치하기
+
 
 # 5.6 CSS
   - MVP.css (임시 css)
