@@ -227,6 +227,8 @@
 # 5.2 Pug 문법구조 살펴보기
   - Pug 파일 문법구조
     - 파이썬처럼 Tab키나 Whitespace로 위계 구분
+	- 변수만을 내용으로 가질 때, `[태그명]=[변수값]`이 가능하다
+	  - `h1 #{pageTitle}` >> `h1=pageTitle`
   - Partials
     - partial: 고정된 내용이 반복이 될 때
     - `mkdir src/views/partials`
@@ -237,7 +239,12 @@
 	- base파일을 상속받으려면, `extends base`하기
 	- base파일에 block를 설정해 파일만의 내용을 넣을 수 있다
 	  - `block content`(base파일&개별파일)
-  - 
+  - Conditionals
+    - `if [조건]`
+	- `else`
+	- `if else [조건]`
+  - Iteration
+  - Mixins
 
 # 5.6 CSS
   - MVP.css (임시 css)
