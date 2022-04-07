@@ -245,9 +245,22 @@
 	- `if else [조건]`
   - Iteration
     - Array나 Object 내 개체에 대해 html객체를 반복하여 생성함
-	- `each [단수명] in [복수명]`
+	- `each [ITEM] in [LIST]`
 	- `else`를 하면 목록이 비었을 경우도 대처할 수 있다
   - Mixins
+    - 동적 데이터를 받을 수 있는 HTML 블록
+	- 데이터 형식을 같지만 변형하여 재사용 가능하다
+	- `mkdir src/views/mixins`
+	- `touch src/views/mixins/video.pug`
+	- mixins
+	  - ```
+	  mixins [Mixin명]([받아온 데이터])
+	  ~~
+	  ```
+	- template
+	  - `include mixins/[mixin명]`
+	  - `+[mixin명](받아올 데이터)`
+	- mixin은 iteration과 함께 사용한다
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
