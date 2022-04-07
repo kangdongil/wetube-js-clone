@@ -207,3 +207,23 @@
 	  - ? / + / *
     - JavaScript Reg
 	  - `\\d` / 
+	  
+# 5.1 Pug 알아보기
+  - Pug: HTML 작성을 돕는 템플릿 엔진
+  - `npm i pug`
+  - server.js
+    - `app.set("view engine", "pug");`
+    - `app.set("views", process.cwd() + "/src/views");`
+	  - views 폴더 경로를 정한다
+	  - cwd(현재작업폴더)는 node가 시작되는 곳이 기준이다
+  - pug파일 render하기(Controller)
+    - render: javascript를 미리 실행한 결과물을 제공하는 것
+	- `return res.render("[PUG파일명]");`
+
+# 5.2 Pug 문법구조 살펴보기
+  - Pug 파일 문법구조
+    - 파이썬처럼 Tab키나 Whitespace로 위계 구분
+  - Partials
+    - partial: 고정된 내용이 반복이 될 때
+    - `mkdir src/views/partials`
+	- `include partials/[PUG파일명].pug`
