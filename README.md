@@ -219,7 +219,11 @@
   - pug파일 render하기(Controller)
     - render: javascript를 미리 실행한 결과물을 제공하는 것
 	- `return res.render("[PUG파일명]");`
-
+  - render할 때 Variable 보내기
+    - res.render("[PUG명]", {[변수명]: [변수값]});
+	- Template에서 변수 사용하기
+	  - `#{[변수명]}`
+	  
 # 5.2 Pug 문법구조 살펴보기
   - Pug 파일 문법구조
     - 파이썬처럼 Tab키나 Whitespace로 위계 구분
@@ -233,5 +237,8 @@
 	- base파일을 상속받으려면, `extends base`하기
 	- base파일에 block를 설정해 파일만의 내용을 넣을 수 있다
 	  - `block content`(base파일&개별파일)
-	- 
-	  - 
+  - 
+
+# 5.6 CSS
+  - MVP.css (임시 css)
+    - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
