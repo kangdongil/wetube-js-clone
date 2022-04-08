@@ -1,3 +1,4 @@
+import "./db";
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
@@ -17,5 +18,5 @@ app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
-const handleListening = () => console.log(`✅ Server Listening on PORT ${PORT}: https://wetube--tbzwn.run.goorm.io/`);
+const handleListening = () => console.log(`🚀 Server Listening on PORT ${PORT}: https://wetube--tbzwn.run.goorm.io/`);
 app.listen(PORT, handleListening);

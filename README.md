@@ -309,8 +309,37 @@
 	  - form 안 input의 값을 가져오려면 name 속성을 가져야 한다
 
 # 6.0 MongoDB 설치하기
+ - MongoDB: `document-based`(objectjson-like) DB
+ - MongoDB 설치하기
+   - 로컬PC: 사이트에 Server 다운로드 하기
+   - GoormIDE: 처음 Setup에서 MongoDB 설치하기
+ - MongoDB Shell 알아보기
+   - GoormIDE의 경우, `Alt+T`로 터미널 2개를 켜고
+   - 각각 `mongod`와 `mongo`를 입력하기
+ - `db.js` 만들기
+   - server와 mongoDB를 연결하는 파일
+     - `touch src/db.js`
+   - server.js
+     - `import "./db";`
+   - DB파일
+     - import mongoose
+	 - `mongoose.connect("mongodb://127.0.0.1:27017/wetube");`
+	 - `mongoose.connection`을 이용해 err와 connect에 대한 console.log 하기
+	 - `mongoose.connection.on("error", (err) ...)
+	 - `mongoose.connection.once("open", ...)`
 
+ - Mongoose: NodeJS로 MongoDB를 다루는 패키지
+   - `npm i mongoose`
 
+  * MongoDB Shell Command
+    - `show dbs`: DB 목록 보기
+
+# 6.9 MongoDB Model 만들기
+  - models 폴더와 model 파일 만들기
+    - `mkdir src/models`
+	- `touch src/models/[첫대문자_파일명].js`
+  - Model: 데이터의 형태를 규정해주는 파일
+	
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
