@@ -338,7 +338,21 @@
   - models 폴더와 model 파일 만들기
     - `mkdir src/models`
 	- `touch src/models/[첫대문자_파일명].js`
-  - Model: 데이터의 형태를 규정해주는 파일
+  - Model: 데이터의 형태를 규정하는 파일
+  - Schema: Model의 모양과 자료형을 기술함
+  - model 파일 만들기
+    - model 파일명은 대문자로 시작함
+	- import mongoose
+    - `new mongoose.Schema({ ~ })`
+	- 자료형은 `{ type: ~ }` 또는 `~`로 나타내기
+	- 배열은 `[{자료형}]`로 나타내기
+	- `mongoose.model("[model명]", [스키마]);
+	- `export deafult [Model]`
+	- `server.js`에서 import [Model파일];
+  * Schema 자료형
+    - String
+	- Number
+	- Date
 	
 # 5.6 CSS
   - MVP.css (임시 css)
