@@ -353,7 +353,14 @@
     - String
 	- Number
 	- Date
-	
+
+# 6.11 서버로부터 `init.js` 분리하기
+  - `touch src/init.js`
+  - `init.js`는 프로젝트에 필요한 것들을 import하는 역할
+  - `server.js`에서 `export default app;`하기
+  - `init.js`에서 `db`, `model`, `server` import하기
+  - nodemon 경로를 `server.js` >> `init.js`로 바꾸기
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
