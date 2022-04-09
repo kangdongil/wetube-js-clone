@@ -431,6 +431,20 @@
   - Middleware: Model을 저장하기 전에 Schema 내용을 변환하는 것
     - `[Schema명].pre("save", ~)`
 	- Model로 저장되기 전 Object는 this로 활용할 수 있음
+  - Static Fuction: Model을 통해 불러올 수 있는 사용자정의 함수
+    - Static 함수 만들기
+	  - `[Schema명].static("[함수명]", [함수])`
+	- Static 함수 사용하기
+	  - `[Model명].[Static함수명]([VARIABLE])`
+
+# 6.25 Video 데이터 Delete하기
+  - Template
+    - watch 템플릿에서 delete 링크 만들기
+  - Router
+    - delete 링크에 대한 GET Request하기
+  - Controller
+    - url parameter에서 id 가져오기
+	- `[Model명].findByIdAndDelete(id)`
 
 # 5.6 CSS
   - MVP.css (임시 css)
