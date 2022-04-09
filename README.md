@@ -446,6 +446,25 @@
     - url parameter에서 id 가져오기
 	- `[Model명].findByIdAndDelete(id)`
 
+# 6.26 Video 데이터 Search하기
+  - Video 데이터 목록 내림차순으로 바꾸기
+    - `find({}).sort({ createdAt: desc })`
+  - Template
+    - search 페이지 만들기
+	  - form(method="GET")
+	  - search input(name="keyword")
+	  - submit
+  - Router
+    - Global Router에서 search 라우트 추가하기
+  - Controller
+    - `query`에서 keyword 받기
+	- query가 없으면 query값은 `undefined`이다
+  - 검색 조건 다양하게 구현하기(MongoDB RegEx`p)
+    - `{$regex: new RegExp(keyword, "i")}`
+	- `i`: ignore-case(대소문자 구별x)
+	- `^[KEYWORD]`: 키워드로 시작하는 단어
+	- `[KEYWORD]$`: 키워드로 끝나는 단어
+	
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
