@@ -207,6 +207,8 @@
 	  - ? / + / *
     - JavaScript Reg
 	  - `\\d` / 
+	- MongoDB Reg
+	  - `[0-9a-f]{24}`
 	  
 # 5.1 Pug 알아보기
   - Pug: HTML 작성을 돕는 템플릿 엔진
@@ -333,6 +335,9 @@
 
   * MongoDB Shell Command
     - `show dbs`: DB 목록 보기
+	- `use [DB명]`: 작업할 DB 정하기
+	- `show collections`: DB 속 Model 목록 보기
+	- `db.[model명].find()`: 해당 Model의 Instance 목록 보기
 
 # 6.9 MongoDB Model 만들기
   - models 폴더와 model 파일 만들기
@@ -349,10 +354,18 @@
 	- `mongoose.model("[model명]", [스키마]);
 	- `export deafult [Model]`
 	- `server.js`에서 import [Model파일];
-  * Schema 자료형
-    - String
-	- Number
-	- Date
+  
+  * Schema 속성
+    - `type`
+	- `required: true`
+	- `default: ~`
+  * Schema 자료형 및 자료형만의 속성
+    - `String`
+	  - uppercase / lowercase
+	  - trim
+	  - minLength / maxLength(HTML Form에도 반영하기)
+	- `Number`
+	- `Date`
 
 # 6.11 서버로부터 `init.js` 분리하기
   - `touch src/init.js`
@@ -364,7 +377,8 @@
 # 6.12 MongoDB Query 다루기
   - MongoDB Query: MongoDB에서 데이터 다루는 명령어
   - DB에서 데이터 불러오기
-    - [Model명].find(~)
+    - `[Model명].find(~)`
+	- `[Model명].findById([id])`
   - `res`에 `return`을 하는 이유는 `res`은 한번만 호출되어야 하기 때문에 코드상으로 함수를 종료해야 하기 때문이다
   - DB Query를 사용할 때는 Javascript의 속도를 맞추기 위해 함수 앞에 `async`를, query앞에 `await`를 한다
   
@@ -373,6 +387,24 @@
 	- Promise: 함수명 앞에 async하고 DB Query 앞에 await하기
 	  - await는 JavaScript가 외부 데이터 불러오기를 기다리는 것
 	- Error를 잡으려면 `try ... catch`하기
+	
+# 6.15 Video 데이터 Create하기
+  - model
+    - 데이터에 대해 자세히 묘사하기
+  - template
+    - 입력이 필요한 값은 input을 만든다(name 포함)
+  - controller
+    - input한 값은 req.body에서 가져오기
+	- 방법 1: object를 만들고 따로 save하기
+	  - `new [Model명]({Schema에_구체적인_값_넣기});`
+	  - `await [object].save();`
+	- 방법 2: `[Model].create`하기
+	  - `await [Model].create({~})`
+    - Validation Error는 `try ... catch`로 잡기
+  * TimeStamp: `Date.Now()`
+  * hashtags값을 javascript로 가공하기
+    - `hashtags.split(",").map(word => #${word})`(backtick 포함하기)
+	
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
