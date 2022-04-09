@@ -361,6 +361,18 @@
   - `init.js`에서 `db`, `model`, `server` import하기
   - nodemon 경로를 `server.js` >> `init.js`로 바꾸기
 
+# 6.12 MongoDB Query 다루기
+  - MongoDB Query: MongoDB에서 데이터 다루는 명령어
+  - DB에서 데이터 불러오기
+    - [Model명].find(~)
+  - `res`에 `return`을 하는 이유는 `res`은 한번만 호출되어야 하기 때문에 코드상으로 함수를 종료해야 하기 때문이다
+  - DB Query를 사용할 때는 Javascript의 속도를 맞추기 위해 함수 앞에 `async`를, query앞에 `await`를 한다
+  
+  * Callback방식 vs. Promise방식
+    - Callback: Callback 함수 안에서 render하여 DB에서 데이터를 받아온 후 렌더링하도록 제한하는 것
+	- Promise: 함수명 앞에 async하고 DB Query 앞에 await하기
+	  - await는 JavaScript가 외부 데이터 불러오기를 기다리는 것
+	- Error를 잡으려면 `try ... catch`하기
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`

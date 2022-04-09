@@ -1,4 +1,7 @@
-export const home = (req, res) => {
+import Video from "../models/Video";
+
+export const home = async(req, res) => {
+	const videos = await Video.find({});
 	return res.render("home", { pageTitle: "Home", videos });
 };
 export const watch = (req, res) => {
