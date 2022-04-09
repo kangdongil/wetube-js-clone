@@ -403,11 +403,11 @@
     - Validation Error는 `try ... catch`로 잡기
   * TimeStamp: `Date.Now()`
   * hashtags값을 javascript로 변환하기
-    - `hashtags.split(",").map(word => #${word})`(backtick 포함하기)
+    - `hashtags.split(",").map(word => word.startsWith("#") ? word : #${word})`(backtick 포함하기)
 
 # 6.20.1 Video 데이터 Read하기
-  - id로 video 데이터 불러오기
-    - `await [Model명].findById([ID]);`
+  - id로 video가 exist한지 확인하기
+    - `await [Model명].exists({ _id: id })`
   - 해당 id의 비디오가 없을 때, 404 보내기
 
 # 6.20.2 Video 데이터 Update하기
@@ -421,6 +421,8 @@
 	  - `video.title = title`
 	  - ...
 	  - `await video.save();`
+	- 방법 2: findByIdAndUpdate
+	  - `[Model명].findByIdAndUpdate(id, {~})`
   - Template
     - input들을 video 데이터 값을 value로 가지기
 	- 
