@@ -402,9 +402,29 @@
 	  - `await [Model].create({~})`
     - Validation Error는 `try ... catch`로 잡기
   * TimeStamp: `Date.Now()`
-  * hashtags값을 javascript로 가공하기
+  * hashtags값을 javascript로 변환하기
     - `hashtags.split(",").map(word => #${word})`(backtick 포함하기)
-	
+
+# 6.20.1 Video 데이터 Read하기
+  - id로 video 데이터 불러오기
+    - `await [Model명].findById([ID]);`
+  - 해당 id의 비디오가 없을 때, 404 보내기
+
+# 6.20.2 Video 데이터 Update하기
+  - Controller
+    - id로 video 데이터 불러오기
+	- 해당 id의 video가 없을 때 404 보내기
+	- video 데이터를 template에 render하기
+    - 방법 1: input값마다 일일히 수정 후 save()하기
+	  - `req.body`에서 input값 받아오기
+	  - id로 video 데이터 가져오기
+	  - `video.title = title`
+	  - ...
+	  - `await video.save();`
+  - Template
+    - input들을 video 데이터 값을 value로 가지기
+	- 
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
