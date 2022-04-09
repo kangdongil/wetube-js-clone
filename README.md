@@ -338,6 +338,7 @@
 	- `use [DB명]`: 작업할 DB 정하기
 	- `show collections`: DB 속 Model 목록 보기
 	- `db.[model명].find()`: 해당 Model의 Instance 목록 보기
+    - `db.[model명].remove({})`: Model의 Instances 지우기
 
 # 6.9 MongoDB Model 만들기
   - models 폴더와 model 파일 만들기
@@ -425,7 +426,11 @@
 	  - `[Model명].findByIdAndUpdate(id, {~})`
   - Template
     - input들을 video 데이터 값을 value로 가지기
-	- 
+
+# 6.23 MongoDB Middleware 알아보기
+  - Middleware: Model을 저장하기 전에 Schema 내용을 변환하는 것
+    - `[Schema명].pre("save", ~)`
+	- Model로 저장되기 전 Object는 this로 활용할 수 있음
 
 # 5.6 CSS
   - MVP.css (임시 css)
