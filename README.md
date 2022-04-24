@@ -464,7 +464,21 @@
 	- `i`: ignore-case(대소문자 구별x)
 	- `^[KEYWORD]`: 키워드로 시작하는 단어
 	- `[KEYWORD]$`: 키워드로 끝나는 단어
-	
+
+# 7.0 
+  - User 모델 만들기
+    - Mongoose Model 구조 만들기
+	  - import mongoose
+	  - userSchema 만들기
+	  - User 모델 만들기
+	  - 모델 export default하기
+    - `email` / `username` / `password` / `name` / `location`
+    - `init.js`에 import하기
+  - Router > Controller > Template
+    - getJoin은 Join 템플릿을 render하기
+    - postJoin은 
+	- Join 템플릿은 생성할 계정 object를 post하면 된다
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
