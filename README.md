@@ -496,6 +496,29 @@
 	- Password 일치여부 확인하기
 	  - `if (password===password1) {~}`
 
+# 7.4 Status Code
+  - render할 때 status code를 부여하면 현재 접속에 대한 정보를 줄 수 있다.
+  - `res.status(400).~`
+  
+  * Status Code 종류 알아보기
+    - `200`: 성공
+	- `400`: Client쪽 오류
+	- `404`: 웹페이지 찾을 수 없음
+
+# 7.5 Login 구현하기
+  - Router > Controller > Template
+    - getLogin은 Login 템플릿을 render하기
+	- postLogin은 Username과 Password 유효한지 확인한다
+	  - Form에 입력한 username인 user 찾기(`User.findOne({ ~ })`)
+	  - Password는 bcrypt의 compare 기능으로 Form과 DB의 password를 비교한다
+      - `await bcrypt.compare(password, user.password)`
+	- Login 관련한 Error 처리하기
+	  - `An account with this username does not exists.`
+	  - `Wrong Passowrd.`
+	- Join과 Login 페이지 오고가는 Link 만들기
+	  - `Don't have an account?`
+	  - `Already have an account?`
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
