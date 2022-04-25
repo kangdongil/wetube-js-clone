@@ -17,6 +17,7 @@
   "homepage": "https://github.com/kangdongil/wetube_goorm_220404#readme",
   "dependencies": {
     "-": "^0.0.1",
+    "bcrypt": "^5.0.1",
     "express": "^4.17.3",
     "mongoose": "^6.2.10",
     "morgan": "^1.10.0",

@@ -409,6 +409,8 @@
 # 6.20.1 Video 데이터 Read하기
   - id로 video가 exist한지 확인하기
     - `await [Model명].exists({ _id: id })`
+  - Operator 사용해 exist 여부 확인하기
+    - `await [Model명].exists({ $or: [{~}, {~}] })`
   - 해당 id의 비디오가 없을 때, 404 보내기
 
 # 6.20.2 Video 데이터 Update하기
@@ -430,7 +432,7 @@
 # 6.23 MongoDB Middleware 알아보기
   - Middleware: Model을 저장하기 전에 Schema 내용을 변환하는 것
     - `[Schema명].pre("save", ~)`
-	- Model로 저장되기 전 Object는 this로 활용할 수 있음
+	- Model로 저장되기 전 Object는 `this`로 활용할 수 있음
   - Static Fuction: Model을 통해 불러올 수 있는 사용자정의 함수
     - Static 함수 만들기
 	  - `[Schema명].static("[함수명]", [함수])`
@@ -465,7 +467,7 @@
 	- `^[KEYWORD]`: 키워드로 시작하는 단어
 	- `[KEYWORD]$`: 키워드로 끝나는 단어
 
-# 7.0 
+# 7.0 User 데이터 Join하기
   - User 모델 만들기
     - Mongoose Model 구조 만들기
 	  - import mongoose
@@ -476,8 +478,23 @@
     - `init.js`에 import하기
   - Router > Controller > Template
     - getJoin은 Join 템플릿을 render하기
-    - postJoin은 
+    - postJoin은 Form에 입력한 데이터를 db에 create하기
+	  - `res.redirect("/login")`
 	- Join 템플릿은 생성할 계정 object를 post하면 된다
+  - Password를 Hashing하기
+    - DB에 raw한 password를 저장하면 해킹에 취약하다
+	- 따라서, 일방향 함수인 hash를 통해 암호화한다
+	- `npm i bcrypt`
+	- `bcrypt.hash([PlainText], [saltRounds], [callbackFunction])`
+	- `pre`함수로 Object가 저장되기 전 `hash`해준다.(`async-await`하기)
+  - Form Validation하기
+    - 데이터가 DB에 저장되기 전 값이 유효한지 확인하는 절차
+	- Unique한 값 중복여부 확인하기
+	  - `await [Model명].exists({ ~ });`
+	  - `if ([EXISTS?]) { return res.render~ };`
+	  - `[Model명].create` 하기 전에 render하기
+	- Password 일치여부 확인하기
+	  - `if (password===password1) {~}`
 
 # 5.6 CSS
   - MVP.css (임시 css)
