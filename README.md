@@ -519,6 +519,42 @@
 	  - `Don't have an account?`
 	  - `Already have an account?`
 
+# 7.7 Sessions와 Cookies 알아보기
+  - Sessions: Backend와 Browser간에 활동을 기억하는 것
+  - Cookies: Backend가 Browser에게 주는 정보를 전달하는 수단
+    - Browser는 Cookie를 자동적으로 request와 함께 첨부한다
+	- Session의 id는 Cookie에 저장된다
+  - HTTP 접속은 Backend가 HTML을 render하면 종료가 된다(=stateless)
+  - Express-Session 작동원리 이해하기
+    - Express-Session은 browser의 request를 받을 때마다 server의 메모리에 session을 생성한다
+    - Browser가 Website를 방문할 때마다 Browser만의 SessionID를 만들어 browser에게 보내준다
+    - Browser는 Cookie에 SessionID를 웹사이트를 방문할 때마다 request와 함께 보낸다
+	- session은 `req.session`에서 확인하며 이는 browser마다 다르다
+    - `req.session`에 user의 정보를 넣을 수 있다
+  - Chrome 브라우저에서 `[Appliation]-[Storage]-[Cookies]`에서 Cookie를 확인할 수 있다.
+
+  * Session Store: Session 저장소
+    - 메모리에 기반한 Session Store는 서버 재시작과 함께 초기화된다
+
+# 7.11 `express-session` 사용해 Login 구현하기
+  - `npm i express-session`
+  - `express-session`으로 `session` 만들기
+    - `server.js`에 import하기
+	- Router 이전에 `session` `app.use`하기
+	- `secret`을 부여하고, `resave`와 `saveUnitialized`을 모두 `true`한다
+    - `req.session`이 생성된다
+  - postLogin에서 `session`에 `login 정보` 추가하기
+	- `req.session.loggedIn = true;`
+	- `req.session.user = user;`
+  - `req.session` 정보를 `res.locals`로 넘기기(middleware)
+	- `res.locals.loggedIn = Boolean(req.session.loggedIn);`
+	- `res.locals.loggedInUser = req.session.user;`
+  - Pug Template에게 Session 정보 보내기(`res.locals`)
+    - Pug Template은 `res.locals`를 읽을 수 있다
+	- `res.locals.[개체명] = [값];`
+	- Middleware로 설정하면 전역변수(Global Variable)로도 설정 가능하다
+	- Pug에서는 `[개체명]`으로 사용가능하다
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
