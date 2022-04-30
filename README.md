@@ -318,6 +318,8 @@
  - MongoDB Shell 알아보기
    - GoormIDE의 경우, `Alt+T`로 터미널 2개를 켜고
    - 각각 `mongod`와 `mongo`를 입력하기
+ - Mongoose: NodeJS로 MongoDB를 다루는 패키지
+   - `npm i mongoose`
  - `db.js` 만들기
    - server와 mongoDB를 연결하는 파일
      - `touch src/db.js`
@@ -329,9 +331,6 @@
 	 - `mongoose.connection`을 이용해 err와 connect에 대한 console.log 하기
 	 - `mongoose.connection.on("error", (err) ...)
 	 - `mongoose.connection.once("open", ...)`
-
- - Mongoose: NodeJS로 MongoDB를 다루는 패키지
-   - `npm i mongoose`
 
   * MongoDB Shell Command
     - `show dbs`: DB 목록 보기
@@ -496,7 +495,7 @@
 	- Password 일치여부 확인하기
 	  - `if (password===password1) {~}`
 
-# 7.4 Status Code
+# 7.4 Status Code 알아보기
   - render할 때 status code를 부여하면 현재 접속에 대한 정보를 줄 수 있다.
   - `res.status(400).~`
   
@@ -519,6 +518,12 @@
 	  - `Don't have an account?`
 	  - `Already have an account?`
 
+# 7.6 `middlewares.js` 분리하기
+  - `touch src/middlewares.js`
+  - `middleware.js`는 `server.js` 내 middleware을 간결히 하기 위한 역할
+  - middleware를 export하고 server에 import하기
+  - import한 middleware는 router 전에 `app.use`하기
+
 # 7.7 Sessions와 Cookies 알아보기
   - Sessions: Backend와 Browser간에 활동을 기억하는 것
   - Cookies: Backend가 Browser에게 주는 정보를 전달하는 수단
@@ -533,15 +538,26 @@
     - `req.session`에 user의 정보를 넣을 수 있다
   - Chrome 브라우저에서 `[Appliation]-[Storage]-[Cookies]`에서 Cookie를 확인할 수 있다.
 
+  * Cookies Properties
+    - secret: Backend가 만든 session임을 증명하는 sign하기
+	- domain: cookie의 소속을 정하기(다른 domain 사용x)
+	- expires: 만료날짜. `session`은 무기한이다
+	- maxAge: 유효기간. 단위는 miliSecond
   * Session Store: Session 저장소
+    - Cookie에는 session의 id만 저장되며 session에 대한 정보는 Server쪽으로 저장된다
     - 메모리에 기반한 Session Store는 서버 재시작과 함께 초기화된다
+	- Production 단계에는 DB에 Session 정보를 저장해야 한다
 
 # 7.11 `express-session` 사용해 Login 구현하기
   - `npm i express-session`
   - `express-session`으로 `session` 만들기
     - `server.js`에 import하기
 	- Router 이전에 `session` `app.use`하기
-	- `secret`을 부여하고, `resave`와 `saveUnitialized`을 모두 `true`한다
+	- session에 `secret`을 부여하고, `resave`와 `saveUnitialized`을 모두 `true`한다
+	  - `resave`는 변경사항이 없어도 기존 session을 다시 저장할지 여부
+	  - `saveUnitialized`는 세션이 수정되지 않아도 session을 저장할지 여부
+	  - 일반적으로 `resave`와 `saveUnitialized`는 모두 `false`처리한다
+	  - `cookie` 속성은 `cookie: {~}`을 추가하여 수정할 수 있다
     - `req.session`이 생성된다
   - postLogin에서 `session`에 `login 정보` 추가하기
 	- `req.session.loggedIn = true;`
@@ -554,6 +570,20 @@
 	- `res.locals.[개체명] = [값];`
 	- Middleware로 설정하면 전역변수(Global Variable)로도 설정 가능하다
 	- Pug에서는 `[개체명]`으로 사용가능하다
+
+# 7.12 MongoStore로 Session을 DB에 저장하기
+  - `npm i connect-mongo`
+  - MongoStore를 import하기
+  - session에 MongoStore.create하고 mongoUrl 추가하기
+    - `store: MongoStore.create({mongoUrl: "mongodb://127.0.0.1:27017/wetube"})`
+
+# 7.14 환경변수(Environment Variable)로 주요내용 숨기기
+  - `.env` 만들기
+  - `.gitignore`에 `.env` 추가하기
+  - `.env` 내 환경변수는 대문자로
+  - `npm i dotenv`
+  - `require("dotenv").config();`
+  - `process.env.[환경변수명]`으로 사용하기
 
 # 5.6 CSS
   - MVP.css (임시 css)

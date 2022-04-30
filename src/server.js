@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -15,35 +16,13 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-	secret: "Hello!",
-	resave : true,
-	saveUninitialized: true,
+	secret: process.env.COOKIE_SECRET,
+	resave : false,
+	saveUninitialized: false,
+	store: MongoStore.create({
+		mongoUrl: process.env.DB_URL
+	}),
 }))
-
-/*
-// Browser의 header 내용 확인하기
-app.use((req, res, next) => {
-	console.log(req.headers);
-	next();
-});
-*/
-
-/*
-// Server에 저장된 session 목록 확인하기
-app.use((req, res, next) => {
-	req.sessionStore.all((err, sessions) => {
-		console.log(sessions);
-		next();
-	});
-});
-*/
-
-/*
-app.get("/add-one", (req, res, next) => {
-	req.session.visited += 1;
-	return res.send(`${req.session.id}\n${req.session.visited}`);
-});
-*/
 
 app.use(localsMiddleware);
 
