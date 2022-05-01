@@ -586,8 +586,11 @@
     - `npm i dotenv`
     - `import "dotenv/config";`
   - `process.env.[환경변수명]`으로 사용하기
+  - `.env`에 값을 저장하는 이유
+    - 유저로부터 값을 숨기기 위해
+	- 전역변수로 사용하기 위해
 
-# 7.16 OAuth로 GitHub 로그인 구현하기
+# 7.16 OAuth로 GitHub 계정 정보 가져오기
   - github OAuth App 만들기
     - [Settings] - [Developer settings] - [OAuth Apps]
 	  - `OAuth Apps` 만들기
@@ -614,10 +617,68 @@
 	  - Controller는 조합한 url을 redirect하기
 	- URL 조합하기
 	  - baseUrl: `https://github.com/login/oauth/authorize`
-	  - config: Object 형태로 parameter 정하기
+	  - config: Object 형태로 parameter 설정하기
+	  - `client_id` / `scope` / `allow_signup`
 	  - `client_id` 값은 `.env`에 저장하기
 	  - `new URLSearchParams(config).toString()`
 	- `baseUrl`과 `params` 조합해 redirect하기
+  - code에서 얻은 access_token로 user정보를 api에서 받아오기
+    - code: GitHub Auth가 끝나고 URL query에 주어지는 정보
+	- Router / Controller
+	  - `/users/github/callback` 라우트 만들기
+	  - Controller는 조합한 url에서 User 정보 가져오기
+	- access_token 받아올 URL 조합하기
+	  - baseUrl: `https://github.com/login/oauth/access_token`
+	  - config: Object 형태로 parameter 설정하기
+	  - `client_id` / `client_secret` / `code`
+	  - `client_id`와 `client_secret` 값은 `.env`에 저장하기
+	  - `code`는 `req.query.code`로 받아오기
+	- Node-Fetch 설치하기
+	  - fetch는 browser만 가능하며 nodeJS에서 사용하려면 package로 받아야 한다
+	  - `npm install node-fetch@2.6.1`
+	  - `import fetch from "node-fetch";`
+	- 데이터를 Fetch하고 json 형식으로 표현하기
+	  - `await fetch([URL], {[CONFIG]})`
+	  - `await([FETCH한_데이터]).json();
+	- code로부터 access_token fetch하기
+	  - `method: "POST"`
+	  - `headers: {Accept: "application/json"}`
+	- access_token을 가지고 api에서 user 정보 fetch하기
+	  - access_token 존재여부 확인하기
+	  - `if("access_token" in ~)`
+	  - 없다면 `/login`으로 redirect하기
+	  - URL: `https://api.github.com/user`
+	  - `headers: {Authorization: token ${access_token}}`
+	  - userData에 담아 차후에 사용하기
+    - access_token을 가지고 api에서 email 정보 fetch하기
+	  - user 정보 fetch 과정과 유사하다
+	  - URL: `https://api.github.com/user/email`
+	  - `headers: {Authorization: token ${access_token}}`
+	  - 유효한 github email은 primary와 verified가 true이다
+	  - `emailData.find((email) => email.primary === true && email.verified === true)
+	  - 만약 유효한 email이 없다면 `/login`으로 redirect하기
+
+# 7.21 GitHub 로그인하기
+  - github의 유효한 이메일로 로그인하기
+	- DB에 해당 email로 계정을 만들었는지 확인하기
+	  - `let user = await User.findOne({ email: [유효한_email] });`
+	- 만약 해당 email을 가진 계정이 없다면(github계정내용으로 user 만들기)
+	  - DB에 `User.create`하여 user 변수에 덮어쓰기
+	  - userData를 활용해 data 채우기
+	  - password는 ""
+	  - githubOnlyLogin을 true로 한다
+	- session 만들어 login 완료하기
+	  - `req.session.loggedIn = true;`
+	  - `req.session.user = user;`
+  - Social로그인 계정은 Login Form 사용 못하게 하기
+    - User Schema의 password required >> `false`
+	- postLogin Controller: User.findOne + `githubLoginOnly` : `false`
+
+# 7.22 Logout 구현하기
+  - ROUTER > CONTROLLER
+  - Session 종료하기
+    - `req.session.destroy();`
+  - Home으로 redirect하기
 
 # 5.6 CSS
   - MVP.css (임시 css)
