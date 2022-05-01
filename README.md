@@ -579,11 +579,45 @@
 
 # 7.14 환경변수(Environment Variable)로 주요내용 숨기기
   - `.env` 만들기
-  - `.gitignore`에 `.env` 추가하기
-  - `.env` 내 환경변수는 대문자로
-  - `npm i dotenv`
-  - `require("dotenv").config();`
+    - `touch .env`
+    - `.gitignore`에 `.env` 추가하기
+    - `.env` 내 환경변수는 대문자로
+  - `.env`에서 환경변수 읽어오기
+    - `npm i dotenv`
+    - `import "dotenv/config";`
   - `process.env.[환경변수명]`으로 사용하기
+
+# 7.16 OAuth로 GitHub 로그인 구현하기
+  - github OAuth App 만들기
+    - [Settings] - [Developer settings] - [OAuth Apps]
+	  - `OAuth Apps` 만들기
+	  - `client_id` / `authorization callback URL` / `client_secret` 가져오기
+  - OAuth로 User가 GitHub 로그인하는 과정 알아보기
+    1. GitHub로 User를 redirect하기
+	2. GitHub는 token과 함께 우리 site로 돌려보냄
+	3. token을 가지고 API에 접속하기
+  - GitHub Authorize 링크 살펴보기
+    - `https://github.com/login/oauth/authorize`
+	- `?[parameter명]=[값]& ...`
+	- URL에 parameter(`?`) 추가하기
+	  - `client_id`: OAuth_App과 연결하기
+	  - `scope`: User 유저 정보에 대해 얼마나 요청할건가
+	  - `allow_signup`: GitHub 계정 여부에 따라 계정 생성할지 묻기
+	- 여러 `scope` 속성을 요청할 때는 띄어쓰기로 구분한다
+	  - `read:user`: User에 대한 모든 정보
+	  - `user:email`: User의 Email만 요청
+  - GitHub로 User를 redirect하기
+    - Template에 직접 긴 url을 입력하기보다 route를 만드는 것이 관리하기 수월하다
+	- Template / Router / Controller
+	  - Login 템플릿에 `/users/github/auth` 링크 만들기
+	  - User 라우터에 `/github/auth` 추가하기
+	  - Controller는 조합한 url을 redirect하기
+	- URL 조합하기
+	  - baseUrl: `https://github.com/login/oauth/authorize`
+	  - config: Object 형태로 parameter 정하기
+	  - `client_id` 값은 `.env`에 저장하기
+	  - `new URLSearchParams(config).toString()`
+	- `baseUrl`과 `params` 조합해 redirect하기
 
 # 5.6 CSS
   - MVP.css (임시 css)
