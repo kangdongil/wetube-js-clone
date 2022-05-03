@@ -42,7 +42,6 @@ export const postJoin = async (req, res) => {
 		})
 	}
 };
-export const edit = (req, res) => res.send("Edit");
 export const remove = (req, res) => res.send("Remove");
 export const getLogin = (req, res) => {
 	return res.render("login", { pageTitle: "Login" });
@@ -143,5 +142,41 @@ export const callbackGithubLogin = async (req, res) => {
 export const logout = (req, res) => {
 	req.session.destroy();
 	return res.redirect("/");
+};
+export const getEdit = (req, res) => {
+	return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+export const postEdit = async (req, res) => {
+	const { _id, email: sessionEmail, username: sessionUsername } = req.session.user;
+	const { name, email, username, location } = req.body;
+	let searchParam = [];
+	let errMsg = [];
+	if (sessionEmail !== email) {
+		searchParam.push({ email });
+		errMsg.push("This email is already taken.");
+	}
+	if (sessionUsername !== username) {
+		searchParam.push({ username });
+		errMsg.push("this username is already taken.");
+	}
+	if (searchParam.length > 0) {
+		const foundUser = await User.findOne({ $or: searchParam });
+		if (foundUser && foundUser._id.toString() !== _id) {
+			return res.status("400").render("edit-profile", {
+				pageTitle: "Edit Profile",
+				errMsg,
+			})
+		}
+	}
+	const updatedUser = await User.findByIdAndUpdate(_id, {
+			name,
+			email,
+			username,
+			location
+		},
+		{ new: true }
+	);
+	req.session.user = updatedUser;
+	return res.redirect("/users/edit");
 };
 export const see = (req, res) => res.send("See User");

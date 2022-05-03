@@ -425,6 +425,8 @@
 	  - `await video.save();`
 	- 방법 2: findByIdAndUpdate
 	  - `[Model명].findByIdAndUpdate(id, {~})`
+	  - findByIdAndUpdate는 default로 update 이전의 데이터를 return한다
+	  - `(id, {~}, { new: true })`하면 업데이트된 이후의 값을 return한다
   - Template
     - input들을 video 데이터 값을 value로 가지기
 
@@ -679,6 +681,26 @@
   - Session 종료하기
     - `req.session.destroy();`
   - Home으로 redirect하기
+
+# 8.0 User 데이터 Edit하기
+  - Router > Controller > Template
+    - Router: getEdit / postEdit
+	- getEdit: `edit-profile` 템플릿을 render하기
+	- `edit-profile` Template에서 form 만들기
+	- value는 `res.locals.loggedInUser`에서 가져오기
+
+# 8.1 Middleware를 이용해 Login여부에 따른 접속 통제하기
+  - `req.session.loggedIn` 여부에 따른 middlware 만들기
+    - `protectorMiddleware`, `publicOnlyMiddleware`
+  - Router에 middleware을 추가하여 접속 통제하기
+    - middleware를 import하기
+	- `protectorMiddleware`
+	  - User: logout / edit
+	  - Video: upload / edit / delete
+	- `publicOnlyMiddleware`: Login
+  - Route에 middlware 추가하는 방법
+    - `[Router명].get([URL], [MIDDLEWARE], [CONT]);`
+	- `[Router명].route([URL]).all([MIDDLEWARE]).get(~).post(~)`
 
 # 5.6 CSS
   - MVP.css (임시 css)
