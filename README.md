@@ -566,7 +566,7 @@
 	- `req.session.user = user;`
   - `req.session` 정보를 `res.locals`로 넘기기(middleware)
 	- `res.locals.loggedIn = Boolean(req.session.loggedIn);`
-	- `res.locals.loggedInUser = req.session.user;`
+	- `res.locals.loggedInUser = req.session.user || {};`
   - Pug Template에게 Session 정보 보내기(`res.locals`)
     - Pug Template은 `res.locals`를 읽을 수 있다
 	- `res.locals.[개체명] = [값];`
@@ -686,8 +686,24 @@
   - Router > Controller > Template
     - Router: getEdit / postEdit
 	- getEdit: `edit-profile` 템플릿을 render하기
-	- `edit-profile` Template에서 form 만들기
-	- value는 `res.locals.loggedInUser`에서 가져오기
+	- `edit-profile` Template에서 form 만들기(password 변경은 8.2 참고)
+	- input의 value는 `res.locals.loggedInUser`에서 가져오기
+  - DB User 데이터 update하기
+    - `User.findByIdAndUpdate`
+	  - `req.session`의 user에서 _id 받아오기
+	  - `{ new: true }` 추가하여 edit한 user 정보 const에 받아오기
+	- session 업데이트하기
+	  - `req.session.user = [update된 user 정보]`
+  - Input 값 validation하기
+    - email와 username은 unique한 값이므로 session 값과 비교한다
+	  - `sessionsEmail !== email(form)`
+	  - `sessionUsername !== username(form)`
+	- 만약 session 값과 form 값이 다르다면 edit한 것으로 간주한다
+	- 이 경우 중복값이 있는 계정(duplicate_key)이 있는지 확인한다
+	  - 빈 Array인 searchParam을 만들어 edit했을 때 push한다
+	  - 만약 searchParam의 값이 있다면,
+	  - `User.findOne({ $or: searchParam })`
+	  - if (foundUser && foundUser._id.toString() !== _id)
 
 # 8.1 Middleware를 이용해 Login여부에 따른 접속 통제하기
   - `req.session.loggedIn` 여부에 따른 middlware 만들기
@@ -701,6 +717,31 @@
   - Route에 middlware 추가하는 방법
     - `[Router명].get([URL], [MIDDLEWARE], [CONT]);`
 	- `[Router명].route([URL]).all([MIDDLEWARE]).get(~).post(~)`
+
+# 8.2 User의 password 변경하기
+  - Controller > Router > Template
+    - password 있는 계정(github계정x)만 접속하기
+	  - session 내 user의 `githubLoginOnly` 여부 확인하여 redirect하기
+	- 계정 password 아는지 확인하기(oldpassword)
+	  - `form_oldpassword`: `req.body`
+	  - `session_password`: `req.session.user.password`
+	  - `bcrypt.compare([form_oldpassword], [session_password])`
+	  - 만약 `form_oldpassword`와 `session_password`가 일치하지 않다면, 에러 띄우기
+	- 새로운 password와 confirmation 비교하기 
+	- 새로운 password를 update하기
+	  - _id로 user를 찾아 password만 교체하고 `user.save()`하기
+	  - `user.save()`하면 pre save도 작동해 password가 hasing된다
+	  - session 비밀번호도 교체하기
+    - 성공적으로 update하면 logout한다(redirect하기)
+	
+# 8.4.1 Views 폴더 세분화하기
+  - `views/` 폴더 관리하기
+    - template이 많아지면서 분류해서 관리할 필요가 생긴다
+	- controller명을 폴더명으로 한다
+  - Controller를 render하기
+    - `views` 폴더가 기준이므로 render하는 경로를 `[폴더명]/[template명]`으로 한다.
+  - Template에서 `base`를 extends하기
+    - 폴더 내 template이라면 base파일이 폴더 밖에 있으므로, `extends ../base`하기
 
 # 5.6 CSS
   - MVP.css (임시 css)

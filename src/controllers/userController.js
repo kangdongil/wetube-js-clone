@@ -151,18 +151,24 @@ export const postEdit = async (req, res) => {
 	const { name, email, username, location } = req.body;
 	let searchParam = [];
 	let errMsg = [];
+	console.log("email: ", sessionEmail, email);
 	if (sessionEmail !== email) {
 		searchParam.push({ email });
 		errMsg.push("This email is already taken.");
 	}
+	console.log("username: ", sessionUsername, username);
 	if (sessionUsername !== username) {
 		searchParam.push({ username });
 		errMsg.push("this username is already taken.");
 	}
 	if (searchParam.length > 0) {
 		const foundUser = await User.findOne({ $or: searchParam });
+		console.log("foundUser: ", foundUser);
 		if (foundUser && foundUser._id.toString() !== _id) {
-			return res.status("400").render("edit-profile", {
+			console.log("string: ", foundUser._id.toString());
+			console.log("_id: ", _id);
+			console.log("&&: ", foundUser && foundUser._id.toString());
+			return res.status(400).render("edit-profile", {
 				pageTitle: "Edit Profile",
 				errMsg,
 			})
@@ -179,4 +185,36 @@ export const postEdit = async (req, res) => {
 	req.session.user = updatedUser;
 	return res.redirect("/users/edit");
 };
+export const getChangePassword = (req, res) => {
+	if (req.session.user.githubLoginOnly === true) {
+		return res.redirect("/");
+	}
+	return res.render("users/change-password", { pageTitle: "Change Password" })
+}
+export const postChangePassword = async (req, res) => {
+	const { oldPassword, newPassword, newPasswordConfirmation } = req.body;
+	const { user: { _id, password } } = req.session;
+	const errMsg = [];
+	const userExists = await bcrypt.compare(oldPassword, password);
+	if (!userExists) {
+		errMsg.push("The current password is incorrect.");
+		return res.status(400).render("users/change-password", {
+			pageTitle: "Change Password",
+			errMsg
+		});
+	}
+	if (newPassword !== newPasswordConfirmation) {
+		errMsg.push("The password does not match the confirmation");
+		return res.status(400).render("users/change-password", {
+			pageTitle: "Change Password",
+			errMsg
+		});
+	}
+	const user = await User.findById(_id);
+	user.password = newPassword;
+	await user.save();
+	req.session.user.password = user.password;
+	// send notification
+	return res.redirect("/users/logout");
+}
 export const see = (req, res) => res.send("See User");

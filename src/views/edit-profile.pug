@@ -11,3 +11,6 @@ block content
 		input(type="text", name="name", placeholder="Name", value=loggedInUser.name, required)
 		input(type="text", name="location", placeholder="Location", value=loggedInUser.location)
 		input(type="submit", value="Update Profile")
+		if !loggedInUser.githubLoginOnly
+			hr
+			a(href="change-password") Change Password &rarr;
