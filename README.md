@@ -743,6 +743,40 @@
   - Template에서 `base`를 extends하기
     - 폴더 내 template이라면 base파일이 폴더 밖에 있으므로, `extends ../base`하기
 
+# 8.6 Image File을 Upload하기
+  - Multer
+    - form을 통해 file을 upload 가능하게 해주는 package
+    - `npm i multer`
+	- multer로 form 데이터를 다루기
+	  - <form enctype="multipart/form-data">
+	- multer가 file을 다루는 folder 설정하기
+	  - `middleware.js`에서 multer를 import하기
+	  - `export const uploadFiles = multer({ dest: "uploads/" });`
+	- post controller 실행하기 전에 form에서 file 가져오기
+	  - `.post([Middleware명].single("[form의 name]"), [post_controller])`
+	  - `multer` middleware를 먼저 실행하고, `post controller`를 나중에 한다
+	  - `req.file`에서 file을 사용할 수 있다
+  - File은 웹하드에 저장하며, DB에는 File의 Path만 저장한다.
+  - Template
+    - Image파일을 upload하는 form 만들기
+      - `label`과 `input(type="file")`을 각각 for와 id로 연결하기
+	  - accept="image/*"하면 image파일을 불러올 수 있다
+	- avatarUrl로 <img> 구현하기
+	  - `img(src="/" + loggedInIUser.avatarUrl ~)`
+  - User의 avatarUrl를 Update하기
+    - form에서 image를 upload한 경우,
+	  - `const { file } = req;`
+	  - `avatarUrl: file.path`
+	- form에서 image를 upload하지 않은 경우,
+	  - `const { avatarUrl } = req.session.user;`
+	  - `avatarUrl: avatarUrl`
+	- `avatarUrl: file ? file.path : avatarUrl`
+  - browser가 uploads 폴더를 조회하도록 허용하기
+    - server.js
+	  - `app.use("[Route명]", express.static("[폴더명]"))`
+
+# 8.9 
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`

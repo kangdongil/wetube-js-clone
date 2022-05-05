@@ -147,8 +147,9 @@ export const getEdit = (req, res) => {
 	return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
-	const { _id, email: sessionEmail, username: sessionUsername } = req.session.user;
+	const { _id, email: sessionEmail, username: sessionUsername, avatarUrl } = req.session.user;
 	const { name, email, username, location } = req.body;
+	const { file } = req;
 	let searchParam = [];
 	let errMsg = [];
 	console.log("email: ", sessionEmail, email);
@@ -163,11 +164,7 @@ export const postEdit = async (req, res) => {
 	}
 	if (searchParam.length > 0) {
 		const foundUser = await User.findOne({ $or: searchParam });
-		console.log("foundUser: ", foundUser);
 		if (foundUser && foundUser._id.toString() !== _id) {
-			console.log("string: ", foundUser._id.toString());
-			console.log("_id: ", _id);
-			console.log("&&: ", foundUser && foundUser._id.toString());
 			return res.status(400).render("edit-profile", {
 				pageTitle: "Edit Profile",
 				errMsg,
@@ -175,6 +172,7 @@ export const postEdit = async (req, res) => {
 		}
 	}
 	const updatedUser = await User.findByIdAndUpdate(_id, {
+			avatarUrl: file ? file.path : avatarUrl,
 			name,
 			email,
 			username,
