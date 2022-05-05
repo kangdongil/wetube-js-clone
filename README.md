@@ -751,7 +751,7 @@
 	  - <form enctype="multipart/form-data">
 	- multer가 file을 다루는 folder 설정하기
 	  - `middleware.js`에서 multer를 import하기
-	  - `export const uploadFiles = multer({ dest: "uploads/" });`
+	  - `multer({ dest: "uploads/[dataType]", limits: { fileSize: [max_byte] }});`	  
 	- post controller 실행하기 전에 form에서 file 가져오기
 	  - `.post([Middleware명].single("[form의 name]"), [post_controller])`
 	  - `multer` middleware를 먼저 실행하고, `post controller`를 나중에 한다
@@ -775,8 +775,31 @@
     - server.js
 	  - `app.use("[Route명]", express.static("[폴더명]"))`
 
-# 8.9 
-
+# 8.9 Data별로 나눠 upload하기
+  - User
+    - Middleware
+	  - `multer({ dest: "uploads/videos/", limit: { fileSize: ~ }})`
+	- Router
+	  - import avatarUpload
+	  - `.post(avatarUpload.single("avatar"), postEdit);`
+  - Video
+    - Template: Upload Video
+	  - `form(enctype="multipart/form-data")`
+	  - `label(for="video")`
+	  - input(type="file", accept="video/*", name="video", id="video", required)
+	- Template: Watch Video
+	  - `video(src="/" + video.fileUrl, controls)`
+	- Middleware
+	  - `multer({ dest: "uploads/videos/", limit: { fileSize: ~ }})`
+	- Router
+	  - import videoUpload
+	  - `.post(videoUpload.single("video"), postUpload);`
+	- Model
+	  - `fileUrl`
+	- Controller
+	  - `const { path: fileUrl } = req.file;`
+	  - `Video.create({ fileUrl, ... })`
+	  
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
