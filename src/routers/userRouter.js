@@ -13,6 +13,6 @@ userRouter.get("/remove", remove);
 userRouter.get("/github/auth", publicOnlyMiddleware, authGithubLogin);
 userRouter.get("/github/callback", publicOnlyMiddleware, callbackGithubLogin);
 userRouter.route("/change-password").all(protectorMiddleware).get(getChangePassword).post(postChangePassword);
-userRouter.get(":id", see);
+userRouter.get("/:id([0-9a-f]{24})", see);
 
 export default userRouter;

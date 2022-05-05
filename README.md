@@ -799,7 +799,9 @@
 	- Controller
 	  - `const { path: fileUrl } = req.file;`
 	  - `Video.create({ fileUrl, ... })`
-	  
+
+# 8.10 
+
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
