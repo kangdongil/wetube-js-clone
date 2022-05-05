@@ -3,7 +3,9 @@ extends base
 block content
 	if errMsg
 		span=errMsg
-	form(method="POST")
+	form(method="POST", enctype="multipart/form-data")
+		label(for="video") Video File
+		input(type="file", name="video", accept="video/*", required, id="video")
 		input(name="title", placeholder="Title", required, type="text", maxlength=50)
 		input(name="description", placeholder="Description", type="text", maxlength=80)
 		input(name="hashtags", placeholder="Hashtags, seperated by comma", type="text")
