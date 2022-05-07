@@ -800,7 +800,92 @@
 	  - `const { path: fileUrl } = req.file;`
 	  - `Video.create({ fileUrl, ... })`
 
-# 8.10 
+# 8.10 User Profile 구현하기
+  - Template
+    - touch `users/profile`
+	- nav: href="/users/${loggedInUser._id}"
+  - Router
+    - `userRouter.get("/:id[0-9a-f]{24}, see)`
+  - Controller
+    - user가 없을 때 404 Error를 띄운다
+	- id는 `req.params`에서, user는 DB에서 id로 가져오면 된다
+	- user를 render할 때 변수로 넘긴다
+
+# 8.11 Video의 owner 설정하기
+  - Model
+    - owner 추가하기
+	- `type: mongoose.Schema.Types.ObjectId`
+	- `ref: "[참고하는_Model명]"`
+  - render할 때 owner 표시하기
+    - controller: watch
+	  - User Model을 import하기
+	  - `video.owner`를 id로 한 User를 찾기
+	  - `owner`를 render 변수로 넘기기
+	- controller: postUpload
+	  - req.session.user에서 _id 받아오기
+	  - Video.create할 때, `owner` 값을 _id로 하기
+  - Video Owner만 Edit, Delete Video 제한하기
+    - Template
+	  - if String(video.owner) === String(loggedInUser._id)
+
+# 9.0 Webpack
+  - .js, .scss나 image파일을 변형, 압축하여 browser가 이해할 수 있는(compatiable) 형태로 만들어주는 패키지
+  - webpack는 주로 툴에 포함되어 있어 직접 다루지 않는다
+  - Webpack 설치하기
+    - `npm i webpack webpack-cli -D`
+  - Webpack은 구버전 Javascript를 사용하므로 유의한다
+    - `import`: `const xx = required(~)`
+    - `export const`: `module.exports = {~}`
+  - `src/client`파일을 webpack으로 변환하여 `assets`폴더에 저장하여 FrontEnd에 표현한다
+    - assets 폴더를 express 서버가 접근할 수 있도록 설정한다
+      - `app.use("/assets", express.static("assets"));`
+	- `main.js`를 frontEnd에 적용하기
+	  - <script src="/static/js/main.js">
+  - webpack 구동하기
+    - `webpack.config.js` 만들기
+	- `assets` script를 package.json에 만들기
+	  - `"assets": "webpack --config webpack.config.js"`
+	- console에 `npm run assets`하기
+  - `webpack.config.js` 구조 살펴보기
+    - `entry`: 변환할 파일
+    - `output`: 변환한 결과물
+      - filename
+	  - path: path.resolve(__dirname, "assets", "js")
+	  - path를 import하기(`const path = require("path");`)
+    - `mode`: 결과물이 "development"인지 "production"인지 설정하기
+    - `module`
+      - `rules`: 어떤 파일을 어떤 변환을 할지 정한다
+	  - rules는 Array이며, [{},{}, ...]
+
+# 9.2 Webpack JS 변환하기
+  - `npm i babel-loader -D`
+    - 요구사항: `@babel/core @babel/preset-env webpack`
+  - babel-loader `module` 만들기
+    - `test: /\.js$/`
+	  - test는 변환할 file의 extension을 말한다
+	- `use: { [LOADER], [OPTIONS] }`
+	  - [LOADER]: `loader: 'babel-loader'`
+	  - [OPTION]: `options: { presets: [['@babel/preset-env', { targets: "defaults "}]]}`
+
+# 9.4 Webpack SCSS 변환하기
+  - 3가지 scss-loader 알아보기
+    - 순서는 `SASS Loader` > `CSS Loader` > `Style Loader`
+    - SASS Loader
+	  - scss를 css로 변환하는 역할
+      - `npm i -D sass sass-loader`
+	- CSS Loader
+	  - @import와 url()을 풀어서 해석하는 역할
+	  - `npm i -D css-loader`
+    - Style Loader
+	  - css를 DOM의 head에 주입하는 역할
+	  - `npm i -D style-loader`
+	- miniCssExtractPlugin
+	  - `npm i -D mini-css-extract-plugin`
+  - 여러 loader를 순서대로 실행하기
+    - `use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]`
+	- 실행하는 loader의 역순으로 진행한다
+  
+
 
 # 5.6 CSS
   - MVP.css (임시 css)
