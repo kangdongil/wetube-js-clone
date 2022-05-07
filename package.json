@@ -7,8 +7,8 @@
     "url": "git+https://github.com/kangdongil/wetube_goorm_220404.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "author": "noru8150",
   "license": "MIT",

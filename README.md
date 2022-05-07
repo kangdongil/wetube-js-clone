@@ -881,11 +881,17 @@
 	  - `npm i -D style-loader`
 	- miniCssExtractPlugin
 	  - `npm i -D mini-css-extract-plugin`
+	  - `const MiniCssExtractPlugin = require("mini-css-extract-plugin");`
+	  - `plugins: [new MiniCssExtractPlugin({filename: "css/styles.css})]`
   - 여러 loader를 순서대로 실행하기
     - `use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]`
 	- 실행하는 loader의 역순으로 진행한다
-  
-
+  - assets 폴더에 js와 css 파일 폴더로 분리하기
+    - js
+	  - path: path.resolve(__dirname, "assets"
+	  - filename: "js/main.js"
+	- scss
+	  - `new MiniCssExtractPlugin({ filename: "css/styles.css"})`
 
 # 5.6 CSS
   - MVP.css (임시 css)
