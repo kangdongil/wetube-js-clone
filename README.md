@@ -828,7 +828,7 @@
     - Template
 	  - if String(video.owner) === String(loggedInUser._id)
 
-# 9.0 Webpack
+# 9.0 Webpack 사용해 FrontEnd 요소로 변환하기
   - .js, .scss나 image파일을 변형, 압축하여 browser가 이해할 수 있는(compatiable) 형태로 만들어주는 패키지
   - webpack는 주로 툴에 포함되어 있어 직접 다루지 않는다
   - Webpack 설치하기
@@ -841,6 +841,7 @@
       - `app.use("/assets", express.static("assets"));`
 	- `main.js`를 frontEnd에 적용하기
 	  - <script src="/static/js/main.js">
+	- `/assets`를 .gitignore에 추가하기
   - webpack 구동하기
     - `webpack.config.js` 만들기
 	- `assets` script를 package.json에 만들기
@@ -886,13 +887,35 @@
   - 여러 loader를 순서대로 실행하기
     - `use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]`
 	- 실행하는 loader의 역순으로 진행한다
+  - css파일을 FrontEnd에 적용하기
+    - `link(rel="stylesheet", href="/static/css/styles.css")`
   - assets 폴더에 js와 css 파일 폴더로 분리하기
     - js
 	  - path: path.resolve(__dirname, "assets"
 	  - filename: "js/main.js"
 	- scss
 	  - `new MiniCssExtractPlugin({ filename: "css/styles.css"})`
+  - webpack 자동실행하기
+    - `webpack.config.js`
+	  - `watch: true`
+	  - `output: { clean: true }`
+  - server와 assets scripts 분리하기
+    - `package.json`의 `scripts`
+	  - `"dev:server": "nodemon"`
+	  - `"dev:assets": "webpack"`
+	  - `--config [FILE명]`은 생략할 수 있다
+	- `nodemon.json` 분리하기
+	  - `{ ~ }`
+	  - `"ignore": ["webpack.config.js, "src/client/*", "src/assets/*"]`
+	  - `"exec": "babel-node src/init/js`
 
 # 5.6 CSS
   - MVP.css (임시 css)
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
+	
+# 10.0 
+  - fontawesome
+    - `link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")`
+  - pug파일을 만들때마다 해당하는 scss파일을 만든다
+    - component: header
+	- screen
