@@ -5,8 +5,8 @@ block content
 		ul
 		each err in errMsg
 			li=err
-	img(src="/" + loggedInUser.avatarUrl, width="100". height="100")
-	form(method="POST", enctype="multipart/form-data")
+	// img(src="/" + loggedInUser.avatarUrl, width="100". height="100")
+	form(method="POST", enctype="multipart/form-data").edit-profile__form
 		label(for="avatar") Avatar
 		input(type="file", id="avatar", name="avatar", accept="image/*")
 		input(type="email", name="email", placeholder="Email", value=loggedInUser.email, required)
@@ -15,5 +15,5 @@ block content
 		input(type="text", name="location", placeholder="Location", value=loggedInUser.location)
 		input(type="submit", value="Update Profile")
 		if !loggedInUser.githubLoginOnly
-			hr
-			a(href="change-password") Change Password &rarr;
+			div.edit-profile__password
+				a(href="change-password") Change Password &rarr;

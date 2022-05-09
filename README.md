@@ -909,13 +909,31 @@
 	  - `"ignore": ["webpack.config.js, "src/client/*", "src/assets/*"]`
 	  - `"exec": "babel-node src/init/js`
 
-# 5.6 CSS
-  - MVP.css (임시 css)
+# 10.0 SCSS 작업전 준비할 사항 살펴보기
+  - MVP.css
+    - 본격적으로 css작업하기 이전에 적용할만한 임시 css
     - `link(rel="stylesheet" href="https://unpkg.com/mvp.css")`
-	
-# 10.0 
+  - `scss/styles.scss`
+    - static으로 실제로 변환되는 파일
+	- `@import`하여 css를 파일로 나누어 관리한다
+	- 어느 Template 파일이건 공통적으로 적용되는 css는 여기에 적는다
+  - `config`
+    - _variables.scss
+	  - `$[VAR명]: [값];`
+	- _reset.scss
+	  - [Link](https://meyerweb.com/eric/tools/css/reset)
   - fontawesome
+    - 텍스트 아이콘을 제공하는 사이트
     - `link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")`
   - pug파일을 만들때마다 해당하는 scss파일을 만든다
-    - component: header
-	- screen
+
+  * 자주 사용하는 fontawesome 아이콘
+    - youtube마크: i.fab.fa-youtube
+	
+# 10.1 SCSS 작업 팁
+  - header(component)
+    - Pug Template: partials로 분리하기
+  - HTML요소 옆에 text 두기
+    - `|   `
+  - double populate
+    - `populate({ path: ~, model: ~, populate: {~}})`
