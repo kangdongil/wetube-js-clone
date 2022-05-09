@@ -937,3 +937,11 @@
     - `|   `
   - double populate
     - `populate({ path: ~, model: ~, populate: {~}})`
+	
+# 11.0 static화되는 js파일 여러개 처리하기
+  - `webpack`
+    - entry는 `{ main: ~, videoPlayer: ~}`처럼 object 처리한다
+	- filename는 `js/[name].js`하면 entry을 참고해 중복없이 static파일을 생성한다
+  - `base.pug`
+    - `block scripts`를 만들어준다
+	- `watch.pug`와 같이 Video Player가 필요한 template에만 script를 import한다
