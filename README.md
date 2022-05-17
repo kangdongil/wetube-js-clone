@@ -945,3 +945,97 @@
   - `base.pug`
     - `block scripts`를 만들어준다
 	- `watch.pug`와 같이 Video Player가 필요한 template에만 script를 import한다
+
+# 11.10 Custom한 Video Player 구현하기
+  0. Video와 Control 구조
+     - div#videoContainer
+	 - video
+	   - `src="/" + video.fileUrl`
+	 - div#videoControls
+  1. Play / Pause 버튼
+     - `button`
+     - `"click"` 이벤트
+	 - `if (video.paused)`
+	 - `video.play()` / `video.pause()`
+	 - `video.paused` 여부에 따라 `playBtn` 내용 바꾸기
+	   - `Play` / `Pause`
+  2. 음소거(Mute) 버튼
+     - `button`
+	 - `"click"` 이벤트
+	 - `if (video.muted)`
+	 - `video.muted = true / false`
+	 - `video.muted` 여부에 따라 `muteBtn` 내용 바꾸기
+	   - `Unmute` / `Mute`
+	 - [volumeRange]: mute 버튼 누를 시, 실제 볼륨량 변화주기
+	   - `volumeRange.value`
+	   - `video.muted ? 0 : (변수에 값 저장)`
+  3. Volume 슬라이더(volumeRange)
+     - `input(type="range")`
+	   - `min=0`, `max=1`
+	   - `step=0.1`
+	   - `value=0.5`(default)
+	 - `"input"` 이벤트
+	   - 슬라이더 변화를 실시간으로 event함
+	   - `event.target.value`
+	 - mute일 때, 슬라이더를 이동하면
+	   - `video.muted`를 `false`하기
+	   - `muteBtn` 값 바꾸기
+	 - 슬라이더 값이 0이 되면, mute하기
+	   - `if (Number(event.target.value) === 0)`
+	   - `video.muted`를 `true`하기
+	   - `muteBtn` 값 바꾸기
+	 - 비디오 볼륨 실제로 바꾸기
+	   - `video.volume`
+	   - 비디오 볼륭 변수에 저장하기(Mute버튼)
+  4. Timeline 슬라이더
+     - `input(type="range")`
+	   - `min=0`
+	   - `max` 값은 `loadedmetadata`에서 `video.duration`으로 받아오기
+	   - `step=1`
+	   - `value=0`(default)
+     - `timeline` 슬라이더로 동영상 조작하기
+	   - `"input"` 이벤트
+	   - `event.target.value`
+	   - `video.currentTime`를 `value` 값으로 하기
+  5. Video Timer 구현하기
+     - video의 metadata 가져오기
+	   - "loadedmetadata" 이벤트
+	   - "loadedmetadata": video 관련된 세부정보
+	 - 새로고침 시 metadata 불러오기 오류 고치기
+	   - `if (video.readyState === 4)`
+	   - loadedmetadata 함수 재호출하기
+	 - video 전체 시간 구하기
+	   - `video.duration`
+	 - 시간 Formatting 하기
+	   - `[S]`: `Math.floor(~)`
+	   - `new Date([S] * 1000)`
+	   - `.toISOString()`
+	   - `.substring([START], [END])`
+	 - 현재 video 진행시간 구하기
+	   - `"timeupdate"` 이벤트
+	   - `video.currentTime`
+	   - `timeline` 슬라이더에 value 반영하기
+  6. Video Controls 뜨게 숨기게 하기
+     - `"mousemove"` / `"mouseleave"` 이벤트
+	 - class `"showing"`으로 controls 보이는지 여부 결정하기
+	   - `videoControls.classList`
+	   - `.add("showing");`
+	   - `.remove("showing");`
+	 - Timeout을 이용해 "mouseleave"해도 Controls을 3초간 지속하기
+	   - `setTimeout(() => [REMOVE_CLASS], 3 * 1000)`
+	   - 위 함수가 return하는 id값을 function 밖 변수에 저장하기(평소에는 null)
+	   - 만약 "mousemove"할 때, `if ([변수])`로 timeout을 확인한다
+	   - timeout이 확인되면 `clearTimeout([변수])`하고 다시 null값 주기
+	 - 마우스를 video 위에서 움직이지 않을 때 Controls 몇초뒤 가리기
+	   - "mousemove" 이벤트
+	   - 마우스가 이동할때마다 if문으로 class를 지우고,
+	   - 바로 Timeout을 진행한다(Timeout의 id는 변수에 저장하기)
+  7. 전체화면 만들기
+     - fullscreen 여부 확인하기
+	   - `document.fullscreenElement`
+     - 평소에는 `null`, 전체화면이면 전체화면중인 Element이 값으로 뜬다
+     - 만약 fullscreen이 null이 아니라면,
+       - 전체화면 나가기: `document.exitFullscreen`
+       - 전체화면하기: `[전체화면Element].requestFullscreen()`
+     - 전체화면Element는 #videoContainer으로 한다.(video와 controls 포함시키기 위해서)
+     - 버튼 값 알맞게 바꾸기
