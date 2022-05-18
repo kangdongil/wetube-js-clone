@@ -1060,3 +1060,41 @@
 	  - 만약 video가 없다면 `sendStatus(404)` 보내기
 	- DB에서 불러온 video의 `meta.view`를 `+1`하기
 	- `video.save()`하고 `sendStatus(200)`하기
+	
+# 13.0 Video Recorder 구현하기
+  - assets에 `recorder.js` 추가하기
+    - `/src/client/js/recorder.js`
+    - webpack
+	  - `entry`에 추가하기
+	  - `static`에 recorder.js 추가된다
+  - scripts 정리하기
+    - `main.js`는 base파일에
+	- `recorder.js`는 `upload` 템플릿에
+  - record 버튼 만들기
+    - button#startBtn
+	- stream 저장하기
+	  - stream 외부 변수로 저장하기
+	  - async / await
+	  - navigator.mediaDevices.getUserMedia({ ~ });
+	  - { ~ }: audio: true, video: true
+	- regeneratorRuntime으로 stream 받아오기
+  	  - `npm i rengerator-runtime`
+	  - `main.js`에 import하기	
+  - Record 버튼 on/off 표현하기
+    - addEventListener / removeEventListener하기
+	- Stop의 경우, recorder.stop()하기
+  - recorder로 녹화하기
+    - recorder, videoFile 외부 변수로 저장하기
+	- recorder: new window.MediaRecorder(stream, { mimeType: "video/webm" })
+	- `recorder.ondataavailable`: record가 끝나면 발생하는 이벤트
+	  - videoFile은 `URL.createObjectURL(event.data)`를 받아오기
+	  - video.scrObject = null(preview 지우기)
+	  - video.src = videoFile(브라우저 메모리 링크 만들기)
+	  - video.loop / video.play()
+	- recorder.start()
+  - recorder로 녹화한 파일 저장하기
+    - document.createElement("a")
+	- a.href = videoFile
+	- a.download = "[File명]"
+	- document.body.appendChild(a)
+	- a.click()
