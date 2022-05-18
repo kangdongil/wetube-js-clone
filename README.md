@@ -1039,3 +1039,24 @@
        - 전체화면하기: `[전체화면Element].requestFullscreen()`
      - 전체화면Element는 #videoContainer으로 한다.(video와 controls 포함시키기 위해서)
      - 버튼 값 알맞게 바꾸기
+
+# 12.2 내부 API로 조회수 올리기
+  - `apiRouter` 만들기
+    - `/api`
+	- render하지 않으므로 post만 한다
+	  - `/videos/:id([0-9a-f]{24}/view)`
+  - Frontend에서 video 데이터 받아오기
+    - `data-attribute`: `data-`로 시작하는 HTML 태그속성
+	- data-id=video._id
+	- `[DIV].dataset`으로 `data-attribute`를 object로 받아올 수 있음.
+  - video가 끝날 때 api 부르기
+    - `"ended"` 이벤트
+	- `[DIV].dataset`에서 id 받아오기
+	- `fetch(`/api/videos/${id}/view`)`하되 method는 POST로
+  - 조회수 올리기
+    - `req.params`에서 id 가져오기
+	- 해당 id의 video가 있는지 확인하기
+	  - `Video.findById`
+	  - 만약 video가 없다면 `sendStatus(404)` 보내기
+	- DB에서 불러온 video의 `meta.view`를 `+1`하기
+	- `video.save()`하고 `sendStatus(200)`하기
