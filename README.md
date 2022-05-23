@@ -1098,3 +1098,16 @@
 	- a.download = "[File명]"
 	- document.body.appendChild(a)
 	- a.click()
+	
+# 15.0 Flash Message 구현하기
+  - Flash Message
+    - session에 저장되는 메세지
+	- 한번 이상 호출되면 cache에서 사라짐
+  - `npm i express-flash`
+  - `server.js`
+    - import `express-flash`
+	- `app.use(flash());`
+  - `req.flash`
+    - `req.flash("[TYPE]", " ~ ")`
+  - `res.locals`
+    - `messages.[TYPE]`
