@@ -1111,3 +1111,10 @@
     - `req.flash("[TYPE]", " ~ ")`
   - `res.locals`
     - `messages.[TYPE]`
+
+# 16.1 Comment 구현하기
+  - Comment 모델 만들기
+    - `src/models/Comment.js` 만들기
+	- 데이터 Relation 다루기
+	- `init.js`에 import하기
+  - 
