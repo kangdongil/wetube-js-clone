@@ -1117,4 +1117,8 @@
     - `src/models/Comment.js` 만들기
 	- 데이터 Relation 다루기
 	- `init.js`에 import하기
-  - 
+  - commentSection.js 만들기
+    - `src/client/js/commentSection.js`
+	- `webpack.config.js`를 수정하여 `assets`폴더에 파일 만들게 하기
+	- `watch.pug`에 commentSection.js 불러오기
+	
