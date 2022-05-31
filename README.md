@@ -503,6 +503,7 @@
   
   * Status Code 종류 알아보기
     - `200`: 성공
+	- `201`: 생성됨(Created)
 	- `400`: Client쪽 오류
 	- `404`: 웹페이지 찾을 수 없음
 
@@ -1121,4 +1122,25 @@
     - `src/client/js/commentSection.js`
 	- `webpack.config.js`를 수정하여 `assets`폴더에 파일 만들게 하기
 	- `watch.pug`에 commentSection.js 불러오기
+  - Comment Box Form 만들기
+    - loggedIn 했을 때, Comment Form 나타나게 하기
+	  - script를 loggedIn 했을때만 import하기
+	- textarea
+	- form 있을때만 eventlistener하기
+	- textarea.value를 변수에 저장하기
+	  - video의 id는 dataset으로 받아오기
+  - fetch로 textarea 값을 backend로 보내기
+    - Comment를 create하는 api 만들기
+	  - fetch([URL], { [CONFIG] })
+	  - `/api/videos/${video}/comment`
+	  - `method: "POST"`
+	  - `body: { [보낼 DATA] }`
+    - Router 만들기
+    - Controller 만들기
+	- fetch하면 JSON 데이터를 string으로 변환하게 된다
+	  - express.text()
+	  - express.json()
+	  - JSON.stringify([OBJECT])
+	  - `headers: { "Content-Type": "application/json" }`
+    - textarea가 비어있을 때 submit이 안되게 하기
 	
