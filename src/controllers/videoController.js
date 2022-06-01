@@ -12,6 +12,7 @@ export const watch = async(req, res) => {
 	if (!video) {
 		return res.status(404).render("404", { pageTitle: "Video not found."});
 	};
+	console.log(video);
 	return res.render("watch", { pageTitle: video.title, video });
 };
 export const getEdit = async(req, res) => {
@@ -126,5 +127,27 @@ export const createComment = async (req, res) => {
 	video.comments.push(comment._id);
 	video.save();
 	console.log(video);
-	return res.sendStatus(201);
+	return res.status(201).json({ newcommentId: comment._id });
+}
+
+export const deleteComment = async (req, res) => {
+	const { _id } = req.session.user;
+	const { id: commentId } = req.params;
+
+	const comment = await Comment.findById(commentId);
+	const videoId = comment.video;
+	if (String(_id) !== String(comment.owner._id)) {
+		return res.sendStatus(403);
+	}
+	const video = await Video.findById(videoId);
+	if (!video) {
+		return res.sendStatus(404);
+	}
+	console.log(video.comments.indexOf(commentId));
+	video.comments.splice(video.comments.indexOf(commentId), 1);
+	console.log(video);
+	await video.save();
+	await Comment.findByIdAndDelete(commentId);
+	
+	return res.sendStatus(200);
 }
